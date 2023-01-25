@@ -1,8 +1,10 @@
 from enum import Enum
+from time import sleep
 import cv2
-import comparator
 import numpy as np
 import mss
+import comparator
+import areas
 
 # Tile values
 class Tiles(Enum) :
@@ -46,6 +48,25 @@ duplicate_orphan = Tiles.Nothing
 # Screenshotter
 sct = mss.mss()
 
-tile_positions = [[312, 938], [407, 938], [502, 938], [597, 938], 
-                [692, 938], [787, 938], [882, 938], [977, 938], [1072, 938], 
-                [1167, 938], [1262, 938], [1357, 938], [1452, 938], [1575, 938]]
+tiles_owned = [Tiles.Nothing, Tiles.Nothing, Tiles.Nothing, Tiles.Nothing, 
+                Tiles.Nothing, Tiles.Nothing, Tiles.Nothing, Tiles.Nothing, 
+                Tiles.Nothing, Tiles.Nothing, Tiles.Nothing, Tiles.Nothing, 
+                Tiles.Nothing]
+
+def check_all_tiles():
+
+    tile_area = areas.tile_1.copy()
+    print(areas.tile_1['left'])
+
+    for i in range(0, 13):
+        tile_check = np.array(sct.grab(tile_area))
+        tile_result = comparator.check_orphan_type(tile_check)
+        if tile_result[2] != Tiles.Nothing:
+            tiles_owned[i] = tile_result[2]
+        tile_area['left'] += 95
+
+
+while(True):
+    sleep(5)
+    check_all_tiles()
+    print(tiles_owned)

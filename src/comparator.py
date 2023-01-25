@@ -44,55 +44,57 @@ def check_orphan_type(tile_position):
 
     yloc, xloc = np.where(one_bamb_match >= 0.8)
     for (x, y) in zip(xloc, yloc):
-        return int(x), int(y), 'bamb1'
+        return int(x), int(y), 1
     
     yloc, xloc = np.where(nine_bamb_match >= 0.8)
     for (x,y) in zip(xloc, yloc):
-        return int(x), int(y), 'bamb9'
+        return int(x), int(y), 2
 
     yloc, xloc = np.where(one_dot_match >= 0.8)
     for (x,y) in zip(xloc, yloc):
-        return int(x), int(y), 'dot1'
+        return int(x), int(y), 3
 
     yloc, xloc = np.where(nine_dot_match >= 0.8)
     for (x,y) in zip(xloc, yloc):
-        return int(x), int(y), 'dot9'
+        return int(x), int(y), 4
 
     yloc, xloc = np.where(one_char_match >= 0.8)
     for (x,y) in zip(xloc, yloc):
-        return int(x), int(y), 'char1'
+        return int(x), int(y), 5
 
     yloc, xloc = np.where(nine_char_match >= 0.8)
     for (x,y) in zip(xloc, yloc):
-        return int(x), int(y), 'char9'
+        return int(x), int(y), 6
 
     yloc, xloc = np.where(east_match >= 0.8)
     for (x,y) in zip(xloc, yloc):
-        return int(x), int(y), 'east'
+        return int(x), int(y), 7
 
     yloc, xloc = np.where(south_match >= 0.8)
     for (x,y) in zip(xloc, yloc):
-        return int(x), int(y), 'south'
+        return int(x), int(y), 8
 
     yloc, xloc = np.where(west_match >= 0.8)
     for (x,y) in zip(xloc, yloc):
-        return int(x), int(y), 'west'
+        return int(x), int(y), 9
 
     yloc, xloc = np.where(north_match >= 0.8)
     for (x,y) in zip(xloc, yloc):
-        return int(x), int(y), 'north'
+        return int(x), int(y), 10
 
     yloc, xloc = np.where(green_match >= 0.8)
     for (x,y) in zip(xloc, yloc):
-        return int(x), int(y), 'green'
+        return int(x), int(y), 11
 
     yloc, xloc = np.where(red_match >= 0.8)
     for (x,y) in zip(xloc, yloc):
-        return int(x), int(y), 'red'
+        return int(x), int(y), 12
 
     yloc, xloc = np.where(white_match >= 0.8)
     for (x,y) in zip(xloc, yloc):
-        return int(x), int(y), 'white'
+        return int(x), int(y), 13
+
+    return 0, 0, 0
 
 def check_button_type(button_position):
     skip_match = cv2.matchTemplate(button_position, skip_img, cv2.TM_CCOEFF_NORMED)
