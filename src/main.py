@@ -24,36 +24,8 @@ class Tiles(Enum) :
     red=12
     white=13
 
-# Tile storage
-def set_tiles():
-    d = {
-        Tiles.bamb1: False,
-        Tiles.bamb9: False,
-        Tiles.dot9: False,
-        Tiles.dot9: False,
-        Tiles.char1: False,
-        Tiles.char9: False,
-        Tiles.east: False,
-        Tiles.south: False,
-        Tiles.west: False,
-        Tiles.north: False,
-        Tiles.green: False,
-        Tiles.red: False,
-        Tiles.white: False
-    }
-    return d
-
-orphan_tiles = set_tiles
-duplicate_obtained = False
-turns_forced = 0
-
 # Screenshotter
 sct = mss.mss()
-
-tiles_owned = [Tiles.Nothing, Tiles.Nothing, Tiles.Nothing, Tiles.Nothing, 
-                Tiles.Nothing, Tiles.Nothing, Tiles.Nothing, Tiles.Nothing, 
-                Tiles.Nothing, Tiles.Nothing, Tiles.Nothing, Tiles.Nothing, 
-                Tiles.Nothing]
 
 def force_turn(tile_number):
     global turns_forced
@@ -67,6 +39,8 @@ def force_turn(tile_number):
             discard_area = areas.tile_1.copy()
             discard_area['left'] += 95 * tile_number
             discard_tile(discard_area)
+            sleep(1.5)
+            check_all_tiles()
             break
 
 def dupe_check():
@@ -84,11 +58,8 @@ def dupe_check():
             if tiles_left > 0:
                 for j in range(0, 13):
                     if tiles_owned[j] == Tiles(i+1):
-                        force_turn(j)
                         tiles_left -= 1
-                        sleep(1)
-                        check_all_tiles()
-
+                        force_turn(j)
                     if (tiles_left == 0):
                         break
 
@@ -97,11 +68,8 @@ def dupe_check():
             if tiles_left > 0:
                 for j in range(0, 13):
                     if tiles_owned[j] == Tiles(i+1):
-                        force_turn(j)
                         tiles_left -= 1
-                        sleep(1)
-                        check_all_tiles()
-
+                        force_turn(j)
                     if (tiles_left == 0):
                         break
 
@@ -128,18 +96,8 @@ def discard_tile(tile_area):
     pyautogui.click()
     pyautogui.moveTo(960, 540)
 
-check_all_tiles()
-
-dupe_check()
-
-while (turns_forced != 0):
-    print("REPEAT DUPE")
-    turns_forced = 0
-    duplicate_obtained = False
-    dupe_check()
-
-while(True):
-    print("DUPES FINISHED")
+def standard_game_loop():
+    global duplicate_obtained
     sleep(1)
     check_all_tiles()
     turn_timer_picture = np.array(sct.grab(areas.timer_area))
@@ -165,4 +123,48 @@ while(True):
                     print(tile_area)
                     discard_tile(tile_area)
                     break
-                    
+
+def is_round_running():
+    global round_running
+    auto_button_picture = np.array(sct.grab(areas.auto_button_area))
+    if(comparator.check_round_status(auto_button_picture)):
+        sleep(1)
+        return False
+    else:
+        return True
+
+round_running = False
+
+while(True):
+    sleep(1)
+    round_running = is_round_running()
+    if (round_running):
+        # Resetting for new round
+        duplicate_obtained = False
+        turns_forced = 0
+        tiles_owned = [Tiles.Nothing, Tiles.Nothing, Tiles.Nothing, Tiles.Nothing, 
+                Tiles.Nothing, Tiles.Nothing, Tiles.Nothing, Tiles.Nothing, 
+                Tiles.Nothing, Tiles.Nothing, Tiles.Nothing, Tiles.Nothing, 
+                Tiles.Nothing]
+
+        # New hand, and new dupes
+        check_all_tiles()
+        dupe_check()
+
+        while (turns_forced != 0):
+            check_all_tiles()
+            print("REPEAT DUPE")
+            turns_forced = 0
+            duplicate_obtained = False
+            dupe_check()
+        
+        while(round_running):
+            standard_game_loop()
+            round_running = is_round_running()
+
+    else:
+        pyautogui.moveTo(areas.auto_button_area['left'] + 20, areas.auto_button_area['top'] + 20)
+        pyautogui.click()
+        pyautogui.moveTo(areas.auto_button_area['left'] + 20, areas.auto_button_area['top'] + 80)
+        pyautogui.click()
+        pyautogui.moveTo(960, 540)

@@ -28,7 +28,10 @@ tsumo_img = cv2.imread('Buttons\\tsumo.png', cv2.IMREAD_UNCHANGED)
 ron_img = cv2.imread('Buttons\\ron.png', cv2.IMREAD_UNCHANGED)
 
 # Importing timer section of board
-timer_img = cv2.imread('Timer\\timer.png', cv2.IMREAD_UNCHANGED)
+timer_img = cv2.imread('Board\\timer.png', cv2.IMREAD_UNCHANGED)
+
+# Auto button section of board
+auto_img = cv2.imread('Board\\auto_buttons.png', cv2.IMREAD_UNCHANGED)
 
 def check_orphan_type(tile_position):
     one_bamb_match = cv2.matchTemplate(tile_position, bamb1_img, cv2.TM_CCOEFF_NORMED)
@@ -131,3 +134,12 @@ def check_turn_timer(timer_position):
 
     print('true')
     return True
+
+def check_round_status(auto_button_position):
+    auto_button_match = cv2.matchTemplate(auto_button_position, auto_img, cv2.TM_CCOEFF_NORMED)
+
+    yloc, xloc = np.where(auto_button_match >= 0.95)
+    for(x,y) in zip(xloc, yloc):
+        return True
+    
+    return False

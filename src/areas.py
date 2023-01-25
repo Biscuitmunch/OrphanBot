@@ -109,3 +109,10 @@ timer_area = {
     'width': 50,
     'height': 50
 }
+
+auto_button_area = {
+    'left': 15,
+    'top': 547,
+    'width': 40,
+    'height': 100
+}
