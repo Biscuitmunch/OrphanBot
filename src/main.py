@@ -133,10 +133,13 @@ check_all_tiles()
 dupe_check()
 
 while (turns_forced != 0):
+    print("REPEAT DUPE")
     turns_forced = 0
+    duplicate_obtained = False
     dupe_check()
 
 while(True):
+    print("DUPES FINISHED")
     sleep(1)
     check_all_tiles()
     turn_timer_picture = np.array(sct.grab(areas.timer_area))
