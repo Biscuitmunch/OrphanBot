@@ -150,7 +150,7 @@ def check_round_status(auto_button_position):
 def check_ending(ending_position):
     ending_match = cv2.matchTemplate(ending_position, ending_img, cv2.TM_CCOEFF_NORMED)
 
-    yloc, xloc = np.where(ending_match >= 1)
+    yloc, xloc = np.where(ending_match >= 0.95)
     for(x,y) in zip(xloc, yloc):
         return True
     return False
