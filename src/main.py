@@ -144,14 +144,12 @@ def next_game():
     sleep(10)
     pyautogui.click()
 
-    pyautogui.moveTo(1360, 320)
+    pyautogui.moveTo(1365, 365)
     sleep(5)
     pyautogui.click()
-
-    pyautogui.moveTo(1390, 400)
-    sleep(5)
+    sleep(2)
     pyautogui.click()
-    sleep(5)
+    sleep(2)
     pyautogui.click()
 
 round_running = False
