@@ -45,6 +45,7 @@ def set_tiles():
 
 orphan_tiles = set_tiles
 duplicate_obtained = False
+turns_forced = 0
 
 # Screenshotter
 sct = mss.mss()
@@ -53,6 +54,56 @@ tiles_owned = [Tiles.Nothing, Tiles.Nothing, Tiles.Nothing, Tiles.Nothing,
                 Tiles.Nothing, Tiles.Nothing, Tiles.Nothing, Tiles.Nothing, 
                 Tiles.Nothing, Tiles.Nothing, Tiles.Nothing, Tiles.Nothing, 
                 Tiles.Nothing]
+
+def force_turn(tile_number):
+    global turns_forced
+    turns_forced += 1
+    print(tiles_owned)
+    print(tile_number)
+    while(True):
+        sleep(1)
+        turn_timer_picture = np.array(sct.grab(areas.timer_area))
+        if(comparator.check_turn_timer(turn_timer_picture)):
+            discard_area = areas.tile_1.copy()
+            discard_area['left'] += 95 * tile_number
+            discard_tile(discard_area)
+            break
+
+def dupe_check():
+    global duplicate_obtained
+
+    tile_amounts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    for tile in tiles_owned:
+        if tile != Tiles.Nothing:
+            tile_amounts[tile.value-1] += 1
+
+    for i in range(0, 13):
+        if tile_amounts[i] > 1 and duplicate_obtained == False:
+            duplicate_obtained = True
+            tiles_left = tile_amounts[i] - 2
+            if tiles_left > 0:
+                for j in range(0, 13):
+                    if tiles_owned[j] == Tiles(i+1):
+                        force_turn(j)
+                        tiles_left -= 1
+                        sleep(1)
+                        check_all_tiles()
+
+                    if (tiles_left == 0):
+                        break
+
+        elif tile_amounts[i] > 1:
+            tiles_left = tile_amounts[i] - 1
+            if tiles_left > 0:
+                for j in range(0, 13):
+                    if tiles_owned[j] == Tiles(i+1):
+                        force_turn(j)
+                        tiles_left -= 1
+                        sleep(1)
+                        check_all_tiles()
+
+                    if (tiles_left == 0):
+                        break
 
 def check_all_tiles():
 
@@ -76,6 +127,14 @@ def discard_tile(tile_area):
     pyautogui.moveTo(tile_area['left'] + 40, tile_area['top'] + 65)
     pyautogui.click()
     pyautogui.moveTo(960, 540)
+
+check_all_tiles()
+
+dupe_check()
+
+while (turns_forced != 0):
+    turns_forced = 0
+    dupe_check()
 
 while(True):
     sleep(1)

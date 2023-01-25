@@ -45,55 +45,55 @@ def check_orphan_type(tile_position):
     red_match = cv2.matchTemplate(tile_position, red_img, cv2.TM_CCOEFF_NORMED)
     white_match = cv2.matchTemplate(tile_position, white_img, cv2.TM_CCOEFF_NORMED)
 
-    yloc, xloc = np.where(one_bamb_match >= 0.9)
+    yloc, xloc = np.where(one_bamb_match >= 0.95)
     for (x, y) in zip(xloc, yloc):
         return int(x), int(y), 1
     
-    yloc, xloc = np.where(nine_bamb_match >= 0.9)
+    yloc, xloc = np.where(nine_bamb_match >= 0.95)
     for (x,y) in zip(xloc, yloc):
         return int(x), int(y), 2
 
-    yloc, xloc = np.where(one_dot_match >= 0.9)
+    yloc, xloc = np.where(one_dot_match >= 0.95)
     for (x,y) in zip(xloc, yloc):
         return int(x), int(y), 3
 
-    yloc, xloc = np.where(nine_dot_match >= 0.9)
+    yloc, xloc = np.where(nine_dot_match >= 0.95)
     for (x,y) in zip(xloc, yloc):
         return int(x), int(y), 4
 
-    yloc, xloc = np.where(one_char_match >= 0.9)
+    yloc, xloc = np.where(one_char_match >= 0.95)
     for (x,y) in zip(xloc, yloc):
         return int(x), int(y), 5
 
-    yloc, xloc = np.where(nine_char_match >= 0.9)
+    yloc, xloc = np.where(nine_char_match >= 0.95)
     for (x,y) in zip(xloc, yloc):
         return int(x), int(y), 6
 
-    yloc, xloc = np.where(east_match >= 0.9)
+    yloc, xloc = np.where(east_match >= 0.95)
     for (x,y) in zip(xloc, yloc):
         return int(x), int(y), 7
 
-    yloc, xloc = np.where(south_match >= 0.9)
+    yloc, xloc = np.where(south_match >= 0.95)
     for (x,y) in zip(xloc, yloc):
         return int(x), int(y), 8
 
-    yloc, xloc = np.where(west_match >= 0.9)
+    yloc, xloc = np.where(west_match >= 0.95)
     for (x,y) in zip(xloc, yloc):
         return int(x), int(y), 9
 
-    yloc, xloc = np.where(north_match >= 0.9)
+    yloc, xloc = np.where(north_match >= 0.95)
     for (x,y) in zip(xloc, yloc):
         return int(x), int(y), 10
 
-    yloc, xloc = np.where(green_match >= 0.9)
+    yloc, xloc = np.where(green_match >= 0.95)
     for (x,y) in zip(xloc, yloc):
         return int(x), int(y), 11
 
-    yloc, xloc = np.where(red_match >= 0.9)
+    yloc, xloc = np.where(red_match >= 0.95)
     for (x,y) in zip(xloc, yloc):
         return int(x), int(y), 12
 
-    yloc, xloc = np.where(white_match >= 0.9)
+    yloc, xloc = np.where(white_match >= 0.95)
     for (x,y) in zip(xloc, yloc):
         return int(x), int(y), 13
 
@@ -105,26 +105,26 @@ def check_button_type(button_position):
     tsumo_match = cv2.matchTemplate(button_position, tsumo_img, cv2.TM_CCOEFF_NORMED)
     ron_match = cv2.matchTemplate(button_position, ron_img, cv2.TM_CCOEFF_NORMED)
 
-    yloc, xloc = np.where(skip_match >= 0.9)
+    yloc, xloc = np.where(skip_match >= 0.95)
     for (x, y) in zip(xloc, yloc):
         return int(x), int(y), 'skip'
     
-    yloc, xloc = np.where(riichi_match >= 0.9)
+    yloc, xloc = np.where(riichi_match >= 0.95)
     for (x,y) in zip(xloc, yloc):
         return int(x), int(y), 'riichi'
 
-    yloc, xloc = np.where(tsumo_match >= 0.9)
+    yloc, xloc = np.where(tsumo_match >= 0.95)
     for (x,y) in zip(xloc, yloc):
         return int(x), int(y), 'tsumo'
 
-    yloc, xloc = np.where(ron_match >= 0.9)
+    yloc, xloc = np.where(ron_match >= 0.95)
     for (x,y) in zip(xloc, yloc):
         return int(x), int(y), 'ron'
 
 def check_turn_timer(timer_position):
     timer_match = cv2.matchTemplate(timer_position, timer_img, cv2.TM_CCOEFF_NORMED)
 
-    yloc, xloc = np.where(timer_match >= 0.9)
+    yloc, xloc = np.where(timer_match >= 0.95)
     for(x,y) in zip(xloc, yloc):
         print('false')
         return False
