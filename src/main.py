@@ -170,12 +170,13 @@ while(True):
         check_all_tiles()
         dupe_check()
 
-        while (turns_forced != 0):
-            check_all_tiles()
-            print("REPEAT DUPE")
-            turns_forced = 0
-            duplicate_obtained = False
-            dupe_check()
+        # TODO fix new dupes coming into hand when getting rid of old dupes
+        # while (turns_forced != 0):
+        #     check_all_tiles()
+        #     print("REPEAT DUPE")
+        #     turns_forced = 0
+        #     duplicate_obtained = False
+        #     dupe_check()
         
         while(round_running):
             standard_game_loop()
