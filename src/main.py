@@ -133,7 +133,30 @@ def is_round_running():
     else:
         return True
 
+def next_game():
+    pyautogui.moveTo(1730, 970)
+    sleep(5)
+    pyautogui.click()
+    sleep(5)
+    pyautogui.click()
+    sleep(10)
+    pyautogui.click()
+    sleep(10)
+    pyautogui.click()
+
+    pyautogui.moveTo(1360, 320)
+    sleep(5)
+    pyautogui.click()
+
+    pyautogui.moveTo(1390, 400)
+    sleep(5)
+    pyautogui.click()
+    sleep(5)
+    pyautogui.click()
+
 round_running = False
+
+next_game()
 
 while(True):
     sleep(1)
@@ -161,6 +184,9 @@ while(True):
         while(round_running):
             standard_game_loop()
             round_running = is_round_running()
+            if (comparator.check_ending):
+                next_game()
+                round_running = False
 
     else:
         pyautogui.moveTo(areas.auto_button_area['left'] + 20, areas.auto_button_area['top'] + 20)
