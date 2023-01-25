@@ -56,7 +56,6 @@ tiles_owned = [Tiles.Nothing, Tiles.Nothing, Tiles.Nothing, Tiles.Nothing,
 def check_all_tiles():
 
     tile_area = areas.tile_1.copy()
-    print(areas.tile_1['left'])
 
     for i in range(0, 13):
         tile_check = np.array(sct.grab(tile_area))
@@ -65,8 +64,15 @@ def check_all_tiles():
             tiles_owned[i] = tile_result[2]
         tile_area['left'] += 95
 
+def check_draw_tile():
+
+    tile_check = np.array(sct.grab(areas.tile_14))
+    tile_result = comparator.check_orphan_type(tile_check)
+    if tile_result[2] != Tiles.Nothing:
+        return tile_result[2]
 
 while(True):
     sleep(5)
     check_all_tiles()
     print(tiles_owned)
+    print(check_draw_tile())
