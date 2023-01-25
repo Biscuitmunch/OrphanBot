@@ -116,3 +116,10 @@ auto_button_area = {
     'width': 40,
     'height': 100
 }
+
+ending_area = {
+    'left': 821,
+    'top': 82,
+    'width': 238,
+    'height': 21
+}

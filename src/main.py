@@ -154,8 +154,6 @@ def next_game():
 
 round_running = False
 
-next_game()
-
 while(True):
     sleep(1)
     round_running = is_round_running()
@@ -182,7 +180,8 @@ while(True):
         while(round_running):
             standard_game_loop()
             round_running = is_round_running()
-            if (comparator.check_ending):
+            ending_picture = np.array(sct.grab(areas.ending_area))
+            if (comparator.check_ending(ending_picture)):
                 next_game()
                 round_running = False
 
