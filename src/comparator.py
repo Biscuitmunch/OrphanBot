@@ -136,7 +136,7 @@ def check_turn_timer(timer_position):
         print('false')
         return False
 
-    sleep(1)
+    sleep(0.5)
     print('true')
     return True
 
