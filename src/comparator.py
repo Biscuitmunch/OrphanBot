@@ -1,3 +1,4 @@
+from time import sleep
 import cv2
 import numpy as np
 
@@ -135,6 +136,7 @@ def check_turn_timer(timer_position):
         print('false')
         return False
 
+    sleep(1)
     print('true')
     return True
 
