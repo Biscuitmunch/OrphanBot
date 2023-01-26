@@ -80,8 +80,7 @@ def check_all_tiles():
     for i in range(0, 13):
         tile_check = np.array(sct.grab(tile_area))
         tile_result = comparator.check_orphan_type(tile_check)
-        if Tiles(tile_result[2]) != Tiles.Nothing:
-            tiles_owned[i] = Tiles(tile_result[2])
+        tiles_owned[i] = Tiles(tile_result[2])
         tile_area['left'] += 95
 
 def check_draw_tile():
@@ -171,12 +170,12 @@ while(True):
         dupe_check()
 
         # TODO fix new dupes coming into hand when getting rid of old dupes
-        # while (turns_forced != 0):
-        #     check_all_tiles()
-        #     print("REPEAT DUPE")
-        #     turns_forced = 0
-        #     duplicate_obtained = False
-        #     dupe_check()
+        while (turns_forced != 0):
+            check_all_tiles()
+            print("REPEAT DUPE")
+            turns_forced = 0
+            duplicate_obtained = False
+            dupe_check()
         
         while(round_running):
             standard_game_loop()
